@@ -57,6 +57,7 @@ with TqdmCallback(desc="fitting"):
         world = {0: wave},
         diagnostics="failed",
         diagnostics_path="diag",
+        fitter_kwargs={"filter_non_finite": True},
     )
 
 # plt.show()
