@@ -3,3 +3,6 @@
 *.log
 tmp/
 */diag/**
+*/.ipynb_checkpoints
+
+
