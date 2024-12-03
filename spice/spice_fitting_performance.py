@@ -1,3 +1,4 @@
+import sys
 import time
 
 import numpy as np
@@ -10,7 +11,6 @@ from sunraster.instr.spice import read_spice_l2_fits
 from sospice.calibrate import spice_error
 
 from astropy.modeling import fitting
-
 
 filename = "solo_L2_spice-n-ras_20230415T120519_V02_184549780-000.fits.gz"
 window = 'N IV 765 ... Ne VIII 770 (Merged)'
@@ -40,6 +40,7 @@ wave = spice.axis_world_coords("em.wl")[0].to_value(u.AA)
 fitter = fitting.TRFLSQFitter()
 fits = []
 
+print(f"Fitting {spice.data.shape[-1]} spectra in serial")
 start = time.time()
 for slit_pos in range(spice.data.shape[-1]):
     data = spice[:, slit_pos].data
@@ -53,4 +54,5 @@ for slit_pos in range(spice.data.shape[-1]):
 
 end = time.time()
 
-print(f"Fitting {spice.data.shape[-1]} spectra took {end - start}s")
+print(f"Fitting {spice.data.shape[-1]} spectra in serial took {end - start}s")
+print(f"Or {(end - start) / spice.data.shape[-1]}s per spectra")
